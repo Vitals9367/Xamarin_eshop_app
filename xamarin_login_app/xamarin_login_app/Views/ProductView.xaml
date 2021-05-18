@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="xamarin_login_app.Views.ProductView"
+			 xmlns:vm="clr-namespace:xamarin_login_app.ViewModels">
+	<ContentPage.BindingContext>
+		<vm:ItemViewModel/>
+	</ContentPage.BindingContext>
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout>
+		<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<StackLayout Grid.Row="0"
+						 Orientation="Horizontal">
+				<StackLayout Orientation="Horizontal"
+							 HorizontalOptions="Center"
+							 VerticalOptions="Center"
+							 HeightRequest="220"
+							 Padding="20,0"
+							 WidthRequest="150"
+							 Grid.Column="0">
+				<Image Source="{Binding image}"
+					   x:Name="img"
+					   Aspect="AspectFit"
+					   HorizontalOptions="StartAndExpand"/>
+							<ActivityIndicator HorizontalOptions="CenterAndExpand" BindingContext="{x:Reference img}" IsRunning="{Binding IsLoading}"></ActivityIndicator>
+						</StackLayout>
+						<StackLayout VerticalOptions="Center" Grid.Column="1" Padding="0,30,20,0" HorizontalOptions="Start">
+							<StackLayout Orientation="Horizontal">
+								<Label Text="Price: " />
+								<Label Text="{Binding price}" />
+							</StackLayout>
+							<StackLayout Orientation="Horizontal" VerticalOptions="Center">
+						<Label Text="Size" VerticalOptions="Center" />
+						<Picker VerticalOptions="Center" Title="Select Size" FontSize="12" SelectedItem="{Binding selectedSize}" ItemsSource="{Binding SizesList}"/>
+					</StackLayout>
+					<StackLayout Orientation="Vertical" VerticalOptions="Center">
+						<Label VerticalOptions="Center" Text="Amount" />
+						<Picker VerticalOptions="Center" Title="Select Amount" FontSize="12" SelectedItem="{Binding selectedAmount}" ItemsSource="{Binding AmountList}"/>
+					</StackLayout>
+							<Button Text="Add To Cart" Command="{Binding BuyCommand}" BackgroundColor="LightSkyBlue" FontAttributes="Bold" TextColor="White" WidthRequest="120" HeightRequest="40" CornerRadius="20"/>
+				</StackLayout>
+			</StackLayout>
+			<StackLayout Grid.Row="2"
+						 Padding="15,20">
+				<Label Text="Detail Info"
+					   FontSize="20"/>
+				<Label Text="{Binding description}"/>
+			</StackLayout>
+					<StackLayout Grid.Row="3" Padding="15,0,0,0" Spacing="10">
+						<Label Text="Write a comment: "
+					   FontSize="20"/>
+						<StackLayout Orientation="Horizontal" Padding="10" Spacing="10">
+							<StackLayout Orientation="Vertical">
+								<Label Text="Rating:" />
+								<Picker Title="*" FontSize="12" SelectedItem="{Binding selectedRating}" ItemsSource="{Binding RatingList}"/>
+							</StackLayout>
+							<StackLayout Padding="20,0,0,0" Orientation="Vertical">
+								<Label Text="Comment:" />
+								<Frame BorderColor="LightGray" HasShadow="False" Padding="1">
+									<Editor Text="{Binding NewComment}" BackgroundColor="White" HeightRequest="100" WidthRequest="230" />
+								</Frame>
+							</StackLayout>
+						</StackLayout>
+						<StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center" >
+						<Button Command="{Binding WriteCommentCommand}" Text="Write a review"
+							BackgroundColor="LightSkyBlue" FontAttributes="Bold" TextColor="White" WidthRequest="200" HeightRequest="40" CornerRadius="20"/>
+						</StackLayout>
+					</StackLayout>
+					<StackLayout Grid.Row="4"
+						 Padding="15,0">
+						<Label Text="Comments: "
+					   FontSize="20"/>
+						<StackLayout x:Name="col2">
+							<StackLayout x:Name="Overlay" HeightRequest="150" VerticalOptions="Center" HorizontalOptions="Center" >
+								<Label Text="No comments :C" VerticalOptions="Center" HorizontalOptions="Center"  FontSize="16" TextColor="LightSkyBlue"></Label>
+							</StackLayout>
+							<ListView  x:Name="rlist" HasUnevenRows="True" ItemsSource="{Binding Reviews}" SelectionMode="None" RowHeight="50" >
+								<ListView.ItemTemplate>
+									<DataTemplate>
+										<ViewCell>
+											<Grid>
+												<Grid.RowDefinitions>
+													<RowDefinition Height="Auto"></RowDefinition>
+													<RowDefinition Height="Auto"></RowDefinition>
+													<RowDefinition Height="Auto"></RowDefinition>
+													<RowDefinition Height="Auto"></RowDefinition>
+												</Grid.RowDefinitions>
+												<StackLayout Padding="10" Spacing="10">
+													<StackLayout Orientation="Horizontal">
+														<Label Grid.Row="0" Grid.Column="0" Text="{Binding user.username}" />
+														<Label Grid.Row="0" HorizontalOptions="End" Grid.Column="0" Text="{Binding date}" />
+													</StackLayout>
+													<StackLayout Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
+														<Label Grid.Row="1" Grid.Column="0" Text="Rating:" />
+														<Label Grid.Row="1" Grid.Column="1" Text="{Binding rating}" />
+													</StackLayout>
+													<StackLayout Orientation="Horizontal">
+														<Label Grid.Row="2" Grid.Column="0" Text="Comment:" />
+														<Label Grid.Row="3" Grid.Column="0" Text="{Binding comment}" />
+													</StackLayout>
+												</StackLayout>
+											</Grid>
+										</ViewCell>
+									</DataTemplate>
+								</ListView.ItemTemplate>
+							</ListView>
+						</StackLayout>
+					</StackLayout>
+				</Grid>
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

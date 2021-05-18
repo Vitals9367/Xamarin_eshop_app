@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="xamarin_login_app.Views.ListView"
+			 xmlns:vm="clr-namespace:xamarin_login_app.ViewModels" xmlns:ff1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+	<ContentPage.BindingContext>
+		<vm:ListViewModel/>
+	</ContentPage.BindingContext>
+	<ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<StackLayout Grid.Row="0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+				<SearchBar x:Name="search1" VerticalOptions="Start" Placeholder="search..." TextChanged="search1_TextChanged"></SearchBar>
+			</StackLayout>
+			<StackLayout Grid.Row="1" x:Name="MainPage">
+				<ListView HasUnevenRows="True" x:Name="col1" IsPullToRefreshEnabled="True" Refreshing="col1_Refreshing" ItemsSource="{Binding SearchList}" ItemSelected="col1_ItemSelected" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" RowHeight="150" >
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto"></RowDefinition>
+								</Grid.RowDefinitions>
+								<StackLayout Orientation="Horizontal" Padding="10" Spacing="10">
+									<StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal"
+									HorizontalOptions="Center"
+									VerticalOptions="Center"
+									HeightRequest="170"
+									MinimumHeightRequest="130"
+									MinimumWidthRequest="130"
+									WidthRequest="130">
+									<Image x:Name="ItemImage" Source="{Binding image}"
+									Aspect="AspectFit"
+									HorizontalOptions="FillAndExpand"/>
+										<ActivityIndicator HorizontalOptions="CenterAndExpand" BindingContext="{x:Reference ItemImage}" IsRunning="{Binding IsLoading}"></ActivityIndicator>
+									</StackLayout>
+									<StackLayout HorizontalOptions="StartAndExpand">
+										<Label FontAttributes="Bold" Text="{Binding name}"/>
+										<Label Text="{Binding description}"/>
+									</StackLayout>
+									<StackLayout VerticalOptions="Center" Orientation="Horizontal" Padding="0,0,25,0">
+										<Label FontAttributes="Bold" Text="Price:"/>
+										<Label HorizontalOptions="Center" Text="{Binding price}" />
+									</StackLayout>
+								</StackLayout>
+							</Grid>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
+			<StackLayout Grid.Row="1" x:Name="Overlay" Padding="0,20" HorizontalOptions="Center" IsVisible="False" VerticalOptions="Center">
+				<ff1:CachedImage Source="loading4.gif" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" WidthRequest="25" HeightRequest="25" />
+				<Label HorizontalOptions="Center" Padding="0,50" VerticalOptions="Center" TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="15" Text="Loading..."></Label>
+			</StackLayout>
+			<StackLayout x:Name="EmptyList" Padding="0,20" HorizontalOptions="Center" IsVisible="False" Grid.Row="1" VerticalOptions="Center">
+				<Label HorizontalOptions="Center" Padding="0,50" VerticalOptions="Center" TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="18" Text="No Items Found :c"></Label>
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

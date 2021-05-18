@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="xamarin_login_app.Views.PaymentView"
+			 xmlns:vm="clr-namespace:xamarin_login_app.ViewModels"
+			 xmlns:behavior="clr-namespace:xamarin_login_app" xmlns:ff1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+	<ContentPage.BindingContext>
+		<vm:PaymentViewModel/>
+	</ContentPage.BindingContext>
+	<ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<StackLayout x:Name="MainPage" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
+				<Label HorizontalOptions="Center" Grid.ColumnSpan="2" Text="Card Payment" TextColor="LightSkyBlue" FontSize="36" FontAttributes="Bold" />
+				<StackLayout Padding="20">
+					<Entry Placeholder="Card Number" Keyboard="Numeric" Text="{Binding CardNumber}">
+						<Entry.Behaviors>
+							<behavior:MaxLengthCheckValidator MaxLength="16"/>
+						</Entry.Behaviors>
+					</Entry>
+					<Entry Placeholder="Card Holders Name" Text="{Binding Name}"/>
+					<StackLayout Orientation="Horizontal">
+						<Entry WidthRequest="100" Keyboard="Numeric" Placeholder="Exp Year" Text="{Binding ExpYear}">
+							<Entry.Behaviors>
+								<behavior:MaxLengthCheckValidator MaxLength="4"/>
+							</Entry.Behaviors>
+						</Entry>
+						<Entry WidthRequest="100" Keyboard="Numeric" Placeholder="Exp Month" Text="{Binding ExpMonth}">
+							<Entry.Behaviors>
+								<behavior:MaxLengthCheckValidator MaxLength="2"/>
+							</Entry.Behaviors>
+						</Entry>
+					</StackLayout>
+					<Entry Placeholder="Cvc" Keyboard="Numeric" Text="{Binding Cvc}">
+						<Entry.Behaviors>
+							<behavior:MaxLengthCheckValidator MaxLength="3"/>
+						</Entry.Behaviors>
+					</Entry>
+				</StackLayout>
+				<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+				<Label Text="Total Amount:" FontSize="16" FontAttributes="Bold" TextColor="LightSkyBlue"></Label>
+				<Label TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="16" Text="{Binding CurrentOrder.price}"></Label>
+				</StackLayout>
+				<Button Text="Make Payment" FontAttributes="Bold" HorizontalOptions="Center" Command="{Binding MakePayment}"
+						BackgroundColor="PaleGreen" TextColor="White" WidthRequest="200" HeightRequest="60" CornerRadius="20"/>
+			</StackLayout>
+			<StackLayout Grid.Row="0" x:Name="Overlay" Padding="0,20" HorizontalOptions="Center" IsVisible="False" VerticalOptions="Center">
+				<ff1:CachedImage Source="loading4.gif" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" WidthRequest="25" HeightRequest="25" />
+				<Label HorizontalOptions="Center" Padding="0,50" VerticalOptions="Center" TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="15" Text="Loading..."></Label>
+			</StackLayout>
+		</Grid>
+    </ContentPage.Content>
+</ContentPage>

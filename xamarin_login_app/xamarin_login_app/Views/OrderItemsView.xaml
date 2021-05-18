@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="xamarin_login_app.Views.OrderItemsView"
+			xmlns:vm="clr-namespace:xamarin_login_app.ViewModels" xmlns:ff1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+	<ContentPage.BindingContext>
+		<vm:OrderItemsViewModel/>
+	</ContentPage.BindingContext>
+	<ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<StackLayout x:Name="MainPage" Grid.Row="0">
+			<StackLayout Padding="10" Spacing="10">
+				<StackLayout Orientation="Horizontal">
+					<Label FontSize="14" FontAttributes="Bold" Text="Total price:" ></Label>
+					<Label FontSize="14" Text="{Binding SelectedOrder.price}"></Label>
+			</StackLayout>
+				<StackLayout Orientation="Horizontal">
+					<Label FontAttributes="Bold" FontSize="14" Text="Payment status:" ></Label>
+					<Label x:Name="StatusField" FontSize="14" FontAttributes="Bold" Text="Status"></Label>
+				</StackLayout>
+			</StackLayout>
+			<ListView HasUnevenRows="True"
+						  x:Name="col1"
+						  ItemsSource="{Binding order_items, Mode=TwoWay}" 
+						  RowHeight="150"
+						  ItemSelected="col1_ItemSelected" SelectedItem="{Binding SelectedItem}" SelectionMode="Single">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto"></RowDefinition>
+									<RowDefinition Height="Auto"></RowDefinition>
+								</Grid.RowDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"></ColumnDefinition>
+								</Grid.ColumnDefinitions>
+								<StackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" Orientation="Horizontal"
+										HeightRequest="170"
+										WidthRequest="140"
+										Padding="10,0,0,10">
+									<Image Source="{Binding defined_item.item.image}"
+										Aspect="AspectFill"
+										HorizontalOptions="Center"
+										x:Name="ItemImage"/>
+									<ActivityIndicator HorizontalOptions="CenterAndExpand" BindingContext="{x:Reference ItemImage}" IsRunning="{Binding IsLoading}"></ActivityIndicator>
+								</StackLayout>
+								<StackLayout VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1" Grid.Column="1">
+									<Grid>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="Auto"></RowDefinition>
+											<RowDefinition Height="Auto"></RowDefinition>
+											<RowDefinition Height="Auto"></RowDefinition>
+										</Grid.RowDefinitions>
+										<StackLayout Grid.Row="0" Padding="0" Margin="0" Grid.Column="0">
+											<Label Grid.Row="0" Text="{Binding defined_item.item.name}"/>
+											<StackLayout Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+												<Label Grid.Row="1" Grid.Column="0" FontAttributes="Bold" Text="Price:"/>
+												<Label Grid.Row="1" Grid.Column="1" Text="{Binding defined_item.item.price}"/>
+											</StackLayout>
+											<StackLayout Grid.Row="2" Orientation="Horizontal">
+												<Label Grid.Row="2" Grid.Column="0" FontAttributes="Bold" Text="Size:"/>
+												<Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" Text="{Binding defined_item.size}"/>
+											</StackLayout>
+											<StackLayout Grid.Row="2" Orientation="Horizontal">
+												<Label Grid.Row="2" Grid.Column="0" FontAttributes="Bold" Text="Amount:"/>
+												<Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" Text="{Binding defined_item.amount}"/>
+											</StackLayout>
+										</StackLayout>
+									</Grid>
+								</StackLayout>
+							</Grid>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<StackLayout Orientation="Horizontal" Padding="10" HorizontalOptions="Center">
+				<Button x:Name="payment_button" Command="{Binding PaymentCommand}" Text="Payment"
+						BackgroundColor="LightSkyBlue" FontAttributes="Bold" TextColor="White" WidthRequest="120" HeightRequest="40" CornerRadius="20"></Button>
+				<Button x:Name="cancel_button" Command="{Binding CancelCommand}" Text="Cancel"
+						BackgroundColor="PaleVioletRed" FontAttributes="Bold" TextColor="White" WidthRequest="120" HeightRequest="40" CornerRadius="20"></Button>
+			</StackLayout>
+		</StackLayout>
+		<StackLayout Grid.Row="0" x:Name="Overlay" Padding="0,20" HorizontalOptions="Center" IsVisible="False" VerticalOptions="Center">
+				<ff1:CachedImage Source="loading4.gif" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" WidthRequest="25" HeightRequest="25" />
+				<Label HorizontalOptions="Center" Padding="0,50" VerticalOptions="Center" TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="15" Text="Loading..."></Label>
+		</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="xamarin_login_app.Views.HomeTabsView"
+	   xmlns:local="clr-namespace:xamarin_login_app.Views"
+	xmlns:vm="clr-namespace:xamarin_login_app.ViewModels">
+	<Shell.BindingContext>
+		<vm:HomeTabsViewModel/>
+	</Shell.BindingContext>
+
+	<Shell.FlyoutHeaderTemplate>
+		<DataTemplate>
+			<Grid BackgroundColor="LightSkyBlue"
+              HeightRequest="200">
+				<Label Text="eShop"
+					FontSize="48"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center" />
+			</Grid>
+		</DataTemplate>
+	</Shell.FlyoutHeaderTemplate>
+
+	<FlyoutItem Title="Search" Icon="ic_action_search.png">
+		<Tab >
+			<ShellContent Title="Search" ContentTemplate="{DataTemplate local:ListView}" >
+			</ShellContent>
+		</Tab>
+	</FlyoutItem>
+	<FlyoutItem Title="Cart" Icon="ic_action_shopping_cart.png">
+		<Tab>
+			<ShellContent Title="Cart" ContentTemplate="{DataTemplate local:CartView}">
+			</ShellContent>
+		</Tab>
+	</FlyoutItem>
+	<FlyoutItem Title="Orders" Icon="baseline_local_shipping_black_18.png">
+		<Tab>
+			<ShellContent ContentTemplate="{DataTemplate local:OrderView}"  Title="Orders">
+			</ShellContent>
+		</Tab>
+	</FlyoutItem>
+	<FlyoutItem Title="Profile" Icon="ic_action_person.png">
+		<Tab>
+			<ShellContent ContentTemplate="{DataTemplate local:ProfileView}"  Title="Profile">
+			</ShellContent>
+		</Tab>
+	</FlyoutItem>
+	<MenuItem Text="Logout" Clicked="MenuItem_Clicked" Icon="ic_action_login.png">
+		
+	</MenuItem>
+</Shell>

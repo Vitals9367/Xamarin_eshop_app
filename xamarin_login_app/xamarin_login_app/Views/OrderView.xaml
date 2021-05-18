@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="xamarin_login_app.Views.OrderView"
+            xmlns:vm="clr-namespace:xamarin_login_app.ViewModels"
+			 xmlns:ff1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+	<ContentPage.BindingContext>
+		<vm:OrdersViewModel/>
+	</ContentPage.BindingContext>
+	<ContentPage.Content>
+		<Grid >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<StackLayout x:Name="MainPage">
+				<ListView HasUnevenRows="True"
+						  x:Name="col1"
+						  SelectionMode="Single"
+						  IsPullToRefreshEnabled="True"
+						  Refreshing="col1_Refreshing"
+						  ItemsSource="{Binding SearchList}"
+						  RowHeight="150"
+						  ItemSelected="col1_ItemSelected"
+						  SelectedItem="{Binding SelectedItem}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="Auto"></RowDefinition>
+										<RowDefinition Height="Auto"></RowDefinition>
+									</Grid.RowDefinitions>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto"></ColumnDefinition>
+									</Grid.ColumnDefinitions>
+									<StackLayout Padding="10,5" Grid.Row="0" Orientation="Horizontal">
+										<Label FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Order #" ></Label>
+										<Label FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="{Binding id}"/>
+									</StackLayout>
+									<StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="10,5" Grid.Row="1" Grid.Column="0">
+										<Grid>
+											<Grid.RowDefinitions>
+												<RowDefinition Height="Auto"></RowDefinition>
+												<RowDefinition Height="Auto"></RowDefinition>
+												<RowDefinition Height="Auto"></RowDefinition>
+											</Grid.RowDefinitions>
+											<StackLayout Grid.Row="0" Padding="0" Margin="0" Grid.Column="0">
+												<Label Grid.Row="0" Text="{Binding date}"/>
+												<StackLayout Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+													<Label Grid.Row="1" Grid.Column="0" FontAttributes="Bold" Text="Price:"/>
+													<Label Grid.Row="1" Grid.Column="1" Text="{Binding price}"/>
+												</StackLayout>
+												<StackLayout Grid.Row="2" Orientation="Horizontal">
+													<Label Grid.Row="2" Grid.Column="0" FontAttributes="Bold" Text="Payment status:" ></Label>
+													<Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" x:Name="StatusField" FontAttributes="Bold" Text="{Binding paid}"></Label>
+												</StackLayout>
+											</StackLayout>
+										</Grid>
+									</StackLayout>
+								</Grid>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
+
+			<StackLayout x:Name="Overlay" Padding="0,20" HorizontalOptions="Center" IsVisible="False" Grid.Row="0" VerticalOptions="Center">
+				<ff1:CachedImage Source="loading4.gif" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" WidthRequest="25" HeightRequest="25" />
+				<Label HorizontalOptions="Center" Padding="0,50" VerticalOptions="Center" TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="15" Text="Loading..."></Label>
+			</StackLayout>
+			<StackLayout x:Name="EmptyCart" Padding="0,20" HorizontalOptions="Center" IsVisible="False" Grid.Row="0" VerticalOptions="Center">
+				<Label HorizontalOptions="Center" Padding="0,50" VerticalOptions="Center" TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="18" Text="No Orders :c"></Label>
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

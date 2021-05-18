@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="xamarin_login_app.Views.CartView"
+			xmlns:vm="clr-namespace:xamarin_login_app.ViewModels"
+			 xmlns:ff1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+	<ContentPage.BindingContext>
+		<vm:CartViewModel/>
+	</ContentPage.BindingContext>
+	<ContentPage.Resources>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<Grid >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+		<StackLayout BackgroundColor="White" x:Name="BodyLay">
+			<StackLayout x:Name="MainPage" Padding="10">
+				<ListView
+					x:Name="col1"
+					ItemsSource="{Binding SearchList}"
+					HasUnevenRows="True"
+					IsPullToRefreshEnabled="True"
+					Refreshing="col1_Refreshing"
+					ItemSelected="col1_ItemSelected" SelectedItem="{Binding SelectedItem}" SelectionMode="Single">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto"></ColumnDefinition>
+										<ColumnDefinition Width="*"></ColumnDefinition>
+										<ColumnDefinition Width="Auto"></ColumnDefinition>
+									</Grid.ColumnDefinitions>
+									<StackLayout Orientation="Horizontal" Padding="10">
+										<StackLayout Padding="10,0,10,0" Orientation="Horizontal"
+										HeightRequest="140"
+										MinimumHeightRequest="140"
+										MinimumWidthRequest="100"
+										WidthRequest="100"
+										HorizontalOptions="Start">
+											<Image Source="{Binding defined_item.item.image}"
+										Aspect="AspectFit"
+										HorizontalOptions="FillAndExpand"
+											   x:Name="ItemImage"/>
+											<ActivityIndicator HorizontalOptions="CenterAndExpand" BindingContext="{x:Reference ItemImage}" IsRunning="{Binding IsLoading}"></ActivityIndicator>
+										</StackLayout>
+										<StackLayout Grid.Column="1" Padding="0" Orientation="Vertical" WidthRequest="400" HorizontalOptions="Center">
+											<Label FontAttributes="Bold" Text="{Binding defined_item.item.name}"/>
+											<Label Text="{Binding defined_item.item.description}"/>
+
+											<StackLayout HorizontalOptions="Start" Orientation="Horizontal">
+												<Label FontAttributes="Bold" Text="Size:"/>
+												<Label Text="{Binding defined_item.size}"/>
+											</StackLayout>
+											<StackLayout HorizontalOptions="Start" Orientation="Horizontal">
+												<Label FontAttributes="Bold" Text="Amount:"/>
+												<Label Text="{Binding defined_item.amount}"/>
+											</StackLayout>
+											<StackLayout HorizontalOptions="Start" Orientation="Horizontal">
+												<Label FontAttributes="Bold" Text="Price:"/>
+												<Label Text="{Binding defined_item.item.price}"/>
+											</StackLayout>
+										</StackLayout>
+										<StackLayout
+											x:Name="close"
+											WidthRequest="60"
+											HeightRequest="60"
+											VerticalOptions="Start"
+											HorizontalOptions="End">
+											<Label x:Name="closeImage" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold" Text="X">
+											</Label>
+											<StackLayout.GestureRecognizers>
+												<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="btn_Clicked" BindingContext="{Binding id}"/>
+											</StackLayout.GestureRecognizers>
+										</StackLayout>
+									</StackLayout>
+								</Grid>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+				<StackLayout Orientation="Vertical" VerticalOptions="Center" Padding="10" HorizontalOptions="Center">
+					<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+						<Label Text="Total price: " TextColor="LightSkyBlue" FontAttributes="Bold"></Label>
+						<Label Text="{Binding totalPrice}" TextColor="LightSkyBlue" FontAttributes="Bold"></Label>
+					</StackLayout>
+					<Button Command="{Binding OrderCommand}" HorizontalOptions="Center" x:Name="OrderBtn" Text="Order"
+							BackgroundColor="LightSkyBlue" FontAttributes="Bold" TextColor="White" WidthRequest="120" HeightRequest="40" CornerRadius="20"></Button>
+				</StackLayout>
+			</StackLayout>
+		</StackLayout>
+		<StackLayout x:Name="Overlay" Padding="0,20" HorizontalOptions="Center" IsVisible="False" Grid.Row="0" VerticalOptions="Center">
+			<ff1:CachedImage Source="loading4.gif" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" WidthRequest="25" HeightRequest="25" />
+			<Label HorizontalOptions="Center" Padding="0,50" VerticalOptions="Center" TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="15" Text="Loading..."></Label>
+		</StackLayout>
+			<StackLayout x:Name="EmptyCart" Padding="0,20" HorizontalOptions="Center" IsVisible="False" Grid.Row="0" VerticalOptions="Center">
+				<Label HorizontalOptions="Center" Padding="0,50" VerticalOptions="Center" TextColor="LightSkyBlue" FontAttributes="Bold" FontSize="18" Text="The Cart is empty :c"></Label>
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

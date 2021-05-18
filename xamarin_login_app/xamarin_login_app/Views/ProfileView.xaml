@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="xamarin_login_app.Views.ProfileView"
+			 xmlns:vm="clr-namespace:xamarin_login_app.ViewModels" xmlns:behavior="clr-namespace:xamarin_login_app">
+	<ContentPage.BindingContext>
+		<vm:ProfileViewModel/>
+	</ContentPage.BindingContext>
+    <ContentPage.Content>
+		<StackLayout>
+			<StackLayout Padding="20">
+				<Label Text="First Name"></Label>
+				<Entry Placeholder="Enter First Name" Text="{Binding FirstName}">
+					<Entry.Behaviors>
+						<behavior:MaxLengthCheckValidator MaxLength="50"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="Last Name"></Label>
+				<Entry Placeholder="Enter Last Name" Text="{Binding LastName}">
+					<Entry.Behaviors>
+						<behavior:MaxLengthCheckValidator MaxLength="50"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="Phone Number"></Label>
+				<Entry Placeholder="Enter Phone Number" Keyboard="Numeric" Text="{Binding PhoneNumber}">
+					<Entry.Behaviors>
+						<behavior:MaxLengthCheckValidator MaxLength="9"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="Address"></Label>
+				<Entry Placeholder="Enter Address" Text="{Binding Address}">
+					<Entry.Behaviors>
+						<behavior:MaxLengthCheckValidator MaxLength="300"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Button Text="Update Info" HorizontalOptions="Center" Command="{Binding UpdateCommand}"
+						BackgroundColor="DarkOrange" TextColor="White" WidthRequest="150" HeightRequest="40" CornerRadius="20"/>
+			</StackLayout>
+		</StackLayout>
+    </ContentPage.Content>
+</ContentPage>
