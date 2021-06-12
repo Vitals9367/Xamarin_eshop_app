@@ -1,4 +1,4 @@
-#Xamarin Eshop Mobile App#
+# Xamarin Eshop Mobile App #
 🛒 Ecommerce site made with Flask microframework.<br/>
 Made during second semester of my studies at Kaunas University of Applied Sciences.<br/>
 
